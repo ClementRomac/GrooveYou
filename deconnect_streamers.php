@@ -1,6 +1,6 @@
 <?php
 session_start();
-if(isset($_POST['username'])){
+if(isset($_SESSION['username'])){
 	try{
 		$bdd = new PDO('mysql:host=localhost;dbname=u966249616_1','root','X3tdhU0WTi');
 		$bdd->setAttribute(PDO::ATTR_CASE,PDO::CASE_LOWER);
@@ -10,9 +10,16 @@ if(isset($_POST['username'])){
 	catch(PDOException $e){
 		die("Erreur MySQL: ".$e->getMessage());
 	}
-	$query = $bdd->prepare('INSERT INTO chat VALUES ("", :username, :message, :time)');
-	$query->execute(array('username' => $_POST['username'], 
-		'message' => $_POST['message'], 'time' => $_POST['time']));
+
+	//Mise à jour time du streamer
+	$bdd->query('UPDATE users SET time=' . time() . '  where ip="' . $_SERVER['REMOTE_ADDR'] . '"');
+
+	//SUPPRESSION DES UTILISATEURS ABSENTS DEPUIS PLUS DE 5m
+	$timestamp_5m = time() - (5*60);
+	echo $timestamp_5m;
+	$bdd->query("UPDATE users SET link = '', ip = '', time = '' WHERE time < " . $timestamp_5m);
+
+
 }else{
 	header('Location: index.php');
 }

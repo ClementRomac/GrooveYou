@@ -1,6 +1,6 @@
 <?php
 try{
-	$bdd = new PDO('mysql:host=localhost;dbname=Stream_Audio','root','Az3rty');
+	$bdd = new PDO('mysql:host=localhost;dbname=u966249616_1','root','X3tdhU0WTi');
 	$bdd->setAttribute(PDO::ATTR_CASE,PDO::CASE_LOWER);
 	$bdd->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
 	$bdd->exec("SET NAMES 'utf8'");
@@ -15,37 +15,40 @@ session_start();
 <head>
 	<title>Stream Audio de malade !</title>
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+	<meta charset='UTF-8'>
 </head>
 <body>
 <?php
 if(empty($_SESSION['username'])){
 	echo "<form action'#' method='POST'>
-			<input type='text' name='username' placeholder='Nom'></br>
-			<input type='text' name='link' placeholder='Lien Stream'><span>  Laissez vide si vous ne streamerez pas</span></br>
+			<input type='text' name='username' placeholder='Pseudo'></br>	
 			<input type='password' name='password' placeholder='Mot de passe'></br>
+			<input type='text' name='link' placeholder='Lien Stream'><span>  Vous pourrez modifier votre lien plus tard</span></br>
 			<input type='submit' value='Se Connecter' name='connection'></br>
-		</form>";
+		</form><br><br>
+		<a href='inscription.php'> S'inscrire ! </a><br><br>";
 	if(isset($_POST['connection'])){
 		if(!empty($_POST['username']) && !empty($_POST['password'])){
-			if($_POST['password'] == 'tractopelle'){
-				$query = $bdd->prepare('SELECT username FROM users WHERE username = :username');
-				$query->execute(array('username' => $_POST['username']));
-				$is_already_connected = $query->fetch();
-				if(empty($is_already_connected['username'])){
+			$query = $bdd->prepare('SELECT username, password, ip FROM users WHERE username = :username');
+			$query->execute(array('username' => $_POST['username']));
+			$retour = $query->fetch();
+			if(md5($_POST['password']) == $retour['password']){
+				if($retour['ip'] == '0'){
 					$_SESSION['username'] = $_POST['username'];
 					$_SESSION['link'] = $_POST['link'];
-					$query = $bdd->prepare('INSERT INTO users SET username = :username, link = :link, ip = :ip, time = :time');
-					$query->execute(array('username' => $_POST['username'],
-											'link' => $_POST['link'],
+					$query = $bdd->prepare('UPDATE users SET link = :link, ip = :ip, time = :time WHERE username = :username');
+					$query->execute(array('link' => $_POST['link'],
 											'ip' => $_SERVER['REMOTE_ADDR'],
-											'time' => time()));
+											'time' => time(),
+											'username' => $_SESSION['username']));
 					header('Location: index.php');
 				}
 				else{
-					echo "Choisissez un autre username";
+					echo "Cet utilisateur est déjà connecté !";
 				}
-			}else{
-				echo "Mauvais mot de passe !";
+			}
+			else{
+				echo "Mauvaise combinaison";
 			}
 		}else{
 			echo "Tous les champs doivent être remplis";
@@ -59,6 +62,8 @@ else{
 			<input type='text' id='link_value' value='".$_SESSION['link']."' style='width:500px;'><input type='submit' value='Modifier'>
 		</form> ";
 	echo "<a href='deco.php'>Deconnexion</a><br><br>";
+
+	echo "<button id='button_actualize_streamers'>Actualiser</button><br>"; 
 	echo "<form id='streamers'></form>";
 	echo "<div id='player'>	
 		</div><br><br><br><br>";
@@ -68,7 +73,8 @@ else{
 				<textarea placeholder='Message' id='message'></textarea>
 				<input type='submit' value='Envoyer'>
 			</form>
-			<div id='message_chat_error'></div>";
+			<div id='message_chat_error'></div>
+			<div id='deconnect_streamers'></div>";
 }
 ?>
 </body>
@@ -95,14 +101,18 @@ $(function() {
 //STREAMERS
 	function actualize_streamers(){
 		$('#streamers').load('streamers.php');
-		setTimeout(actualize_streamers, 2000);
+		//setTimeout(actualize_streamers, 2000);
 	}
 	actualize_streamers();
 
+	$("#button_actualize_streamers").click(function(e){
+		actualize_streamers();
+	})
+
 	$('#streamers').submit(function(e){
 		e.preventDefault();
-		var link = $('#selector').val();
-		$('#player').html("<video controls autoplay name='media'><source src='"+ link +"' type='audio/mpeg'></video>");
+		var link = $('input[name=streamers_tolisten]:checked').val();
+		$('#player').html("<audio controls autoplay name='media'><source src='"+ link +"' ></audio>");
 	});
 
 //CHAT
@@ -112,11 +122,10 @@ $(function() {
 	}
 	load_chat_messages();
 
-	$('#new_message').submit(function(e){
-		e.preventDefault();
+	function insert_chat_message(){
 		var message = $('#message').val();
 		$('#message').val("");
-		var date = <?= '"'.date('d/m/Y h:i:s').'"' ?>;
+		var date = <?= '"'.date('d/m/Y H:i:s').'"' ?>;
 		if(message != "" && message != " "){
 		    $.ajax({
 		        url : "add_message.php",
@@ -132,7 +141,18 @@ $(function() {
 		}else{
 			$('#message_chat_error').text("Veuillez entrer un message non vide");
 		}
+	}
+
+	$('#new_message').submit(function(e){
+		e.preventDefault();
+		insert_chat_message();
 	});
 
+	//KICK DECONNECTED TOUTES LES MINUTES
+	function deconnect_streamers(){
+		$('#deconnect_streamers').load("deconnect_streamers.php");
+		setTimeout(deconnect_streamers, 60000);
+	}
+	deconnect_streamers();
 });
 </script>
