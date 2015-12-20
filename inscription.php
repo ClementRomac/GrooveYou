@@ -13,7 +13,7 @@ session_start();
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Stream Audio de malade !</title>
+	<title>GroovYou</title>
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
 </head>
 <body>
