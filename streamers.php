@@ -2,7 +2,7 @@
 session_start();
 if(isset($_SESSION['username'])){
 	try{
-		$bdd = new PDO('mysql:host=localhost;dbname=Stream_Audio','root','');
+		$bdd = new PDO('mysql:host=localhost;dbname=stream_audio_master','root','');
 		$bdd->setAttribute(PDO::ATTR_CASE,PDO::CASE_LOWER);
 		$bdd->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
 		$bdd->exec("SET NAMES 'utf8'");
@@ -28,8 +28,8 @@ if(isset($_SESSION['username'])){
 	}
 
 	//SUPPRESSION DES UTILISATEURS ABSENTS DEPUIS PLUS DE 5S
-	$timestamp_5s = time() - 5;
-	$bdd->query('DELETE FROM users WHERE time < ' . $timestamp_5s);
+	// $timestamp_5s = time() - 5;
+	// $bdd->query('DELETE FROM users WHERE time < ' . $timestamp_5s);
 
 	//AFFICHAGE NOMBRE UTILISATEURS CONNECTES
 	$retour = $bdd->query('SELECT COUNT(*) AS nbre_entrees FROM users WHERE ip!="' . $_SERVER['REMOTE_ADDR'] . '"');
