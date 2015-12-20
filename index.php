@@ -1,6 +1,6 @@
 <?php
 try{
-	$bdd = new PDO('mysql:host=localhost;dbname=Stream_Audio','root','');
+	$bdd = new PDO('mysql:host=localhost;dbname=stream_audio_dev','root','');
 	$bdd->setAttribute(PDO::ATTR_CASE,PDO::CASE_LOWER);
 	$bdd->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
 	$bdd->exec("SET NAMES 'utf8'");
@@ -25,28 +25,23 @@ if(empty($_SESSION['username'])){
 			<input type='text' name='link' placeholder='Lien Stream'><span>  Vous pourrez modifier votre lien plus tard</span></br>
 			<input type='submit' value='Se Connecter' name='connection'></br>
 		</form><br><br>
-		<a href='inscription.php'> S'inscrire ! </a>";
+		<a href='inscription.php'> S'inscrire ! </a><br><br>";
 	if(isset($_POST['connection'])){
 		if(!empty($_POST['username']) && !empty($_POST['password'])){
-			if($_POST['password'] == 'tractopelle'){
-				$query = $bdd->prepare('SELECT username FROM users WHERE username = :username');
-				$query->execute(array('username' => $_POST['username']));
-				$is_already_connected = $query->fetch();
-				if(empty($is_already_connected['username'])){
-					$_SESSION['username'] = $_POST['username'];
-					$_SESSION['link'] = $_POST['link'];
-					$query = $bdd->prepare('INSERT INTO users SET username = :username, link = :link, ip = :ip, time = :time');
-					$query->execute(array('username' => $_POST['username'],
-											'link' => $_POST['link'],
-											'ip' => $_SERVER['REMOTE_ADDR'],
-											'time' => time()));
-					header('Location: index.php');
-				}
-				else{
-					echo "Choisissez un autre username";
-				}
-			}else{
-				echo "Mauvais mot de passe !";
+			$query = $bdd->prepare('SELECT username, password FROM users WHERE username = :username');
+			$query->execute(array('username' => $_POST['username']));
+			$retour = $query->fetch();
+			if(md5($_POST['password']) == $retour['password']){
+				$_SESSION['username'] = $_POST['username'];
+				$_SESSION['link'] = $_POST['link'];
+				$query = $bdd->prepare('UPDATE users SET link = :link, ip = :ip, time = :time');
+				$query->execute(array('link' => $_POST['link'],
+										'ip' => $_SERVER['REMOTE_ADDR'],
+										'time' => time()));
+				header('Location: index.php');
+			}
+			else{
+				echo "Mauvaise combinaison";
 			}
 		}else{
 			echo "Tous les champs doivent être remplis";
