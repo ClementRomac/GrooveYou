@@ -15,6 +15,7 @@ session_start();
 <head>
 	<title>GroovYou</title>
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+	<meta charset='UTF-8'>
 </head>
 <body>
 <?php
