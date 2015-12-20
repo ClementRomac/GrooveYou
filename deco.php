@@ -9,7 +9,7 @@ catch(PDOException $e){
 	die("Erreur MySQL: ".$e->getMessage());
 }
 session_start();
-$query = $bdd->prepare('DELETE FROM users WHERE username = :username');
+$query = $bdd->prepare("UPDATE users SET link = '', ip='', time='' WHERE username = :username");
 $query->execute(array('username' => $_SESSION['username']));
 session_destroy();
 header('Location: index.php');

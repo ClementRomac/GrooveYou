@@ -15,6 +15,7 @@ session_start();
 <head>
 	<title>Stream Audio de malade !</title>
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+	<meta charset='UTF-8'>
 </head>
 <body>
 <?php
@@ -28,17 +29,23 @@ if(empty($_SESSION['username'])){
 		<a href='inscription.php'> S'inscrire ! </a><br><br>";
 	if(isset($_POST['connection'])){
 		if(!empty($_POST['username']) && !empty($_POST['password'])){
-			$query = $bdd->prepare('SELECT username, password FROM users WHERE username = :username');
+			$query = $bdd->prepare('SELECT username, password, ip FROM users WHERE username = :username');
 			$query->execute(array('username' => $_POST['username']));
 			$retour = $query->fetch();
 			if(md5($_POST['password']) == $retour['password']){
-				$_SESSION['username'] = $_POST['username'];
-				$_SESSION['link'] = $_POST['link'];
-				$query = $bdd->prepare('UPDATE users SET link = :link, ip = :ip, time = :time');
-				$query->execute(array('link' => $_POST['link'],
-										'ip' => $_SERVER['REMOTE_ADDR'],
-										'time' => time()));
-				header('Location: index.php');
+				if($retour['ip'] == '0'){
+					$_SESSION['username'] = $_POST['username'];
+					$_SESSION['link'] = $_POST['link'];
+					$query = $bdd->prepare('UPDATE users SET link = :link, ip = :ip, time = :time WHERE username = :username');
+					$query->execute(array('link' => $_POST['link'],
+											'ip' => $_SERVER['REMOTE_ADDR'],
+											'time' => time(),
+											'username' => $_SESSION['username']));
+					header('Location: index.php');
+				}
+				else{
+					echo "Cet utilisateur est déjà connecté !";
+				}
 			}
 			else{
 				echo "Mauvaise combinaison";
@@ -66,7 +73,8 @@ else{
 				<textarea placeholder='Message' id='message'></textarea>
 				<input type='submit' value='Envoyer'>
 			</form>
-			<div id='message_chat_error'></div>";
+			<div id='message_chat_error'></div>
+			<div id='deconnect_streamers'></div>";
 }
 ?>
 </body>
@@ -114,11 +122,10 @@ $(function() {
 	}
 	load_chat_messages();
 
-	$('#new_message').submit(function(e){
-		e.preventDefault();
+	function insert_chat_message(){
 		var message = $('#message').val();
 		$('#message').val("");
-		var date = <?= '"'.date('d/m/Y h:i:s').'"' ?>;
+		var date = <?= '"'.date('d/m/Y H:i:s').'"' ?>;
 		if(message != "" && message != " "){
 		    $.ajax({
 		        url : "add_message.php",
@@ -134,7 +141,18 @@ $(function() {
 		}else{
 			$('#message_chat_error').text("Veuillez entrer un message non vide");
 		}
+	}
+
+	$('#new_message').submit(function(e){
+		e.preventDefault();
+		insert_chat_message();
 	});
 
+	//KICK DECONNECTED TOUTES LES MINUTES
+	function deconnect_streamers(){
+		$('#deconnect_streamers').load("deconnect_streamers.php");
+		setTimeout(deconnect_streamers, 60000);
+	}
+	deconnect_streamers();
 });
 </script>
