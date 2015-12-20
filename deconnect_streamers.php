@@ -16,6 +16,7 @@ if(isset($_SESSION['username'])){
 
 	//SUPPRESSION DES UTILISATEURS ABSENTS DEPUIS PLUS DE 5m
 	$timestamp_5m = time() - (5*60);
+	echo $timestamp_5m;
 	$bdd->query("UPDATE users SET link = '', ip = '', time = '' WHERE time < " . $timestamp_5m);
 
 
