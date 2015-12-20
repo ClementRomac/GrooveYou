@@ -10,10 +10,16 @@ if(isset($_SESSION['username'])){
 	catch(PDOException $e){
 		die("Erreur MySQL: ".$e->getMessage());
 	}
-	$query = $bdd->query('SELECT id, username, message, time FROM chat ORDER BY id DESC');
-	while ($data = $query->fetch()) {
-		echo "<p>>>".$data['username']." - ".$data['time']." > ".$data['message']."</p>";
-	}
+
+	//Mise à jour time du streamer
+	$bdd->query('UPDATE users SET time=' . time() . '  where ip="' . $_SERVER['REMOTE_ADDR'] . '"');
+
+	//SUPPRESSION DES UTILISATEURS ABSENTS DEPUIS PLUS DE 5m
+	$timestamp_5m = time() - (5*60);
+	echo $timestamp_5m;
+	$bdd->query("UPDATE users SET link = '', ip = '', time = '' WHERE time < " . $timestamp_5m);
+
+
 }else{
 	header('Location: index.php');
 }
