@@ -37,7 +37,7 @@ if(empty($_SESSION['username'])){
 			$query->execute(array('username' => $_POST['username']));
 			$retour = $query->fetch();
 			if(md5($_POST['password']) == $retour['password']){
-				if($retour['ip'] == '0'){
+				if($retour['ip'] == ''){
 					$_SESSION['username'] = $_POST['username'];
 					$_SESSION['link'] = $_POST['link'];
 					$query = $bdd->prepare('UPDATE users SET link = :link, ip = :ip, time = :time WHERE username = :username');
