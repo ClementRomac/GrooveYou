@@ -13,17 +13,17 @@ session_start();
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Stream Audio de malade !</title>
+	<title>GroovYou</title>
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
 	<link rel="stylesheet" href="css/style.css" type="text/css">
 	<meta charset='UTF-8'>
 </head>
 <body>
-<div class="connexion">
 <?php
 if(empty($_SESSION['username'])){
-	echo "<p> Connexion</p>
-	<form action='#' method='POST'>
+	echo "<div class='connexion'>
+	<p> Connexion</p>
+	<form action'#' method='POST'>
 			<input type='text' name='username' placeholder='Pseudo'></br>	
 			<input type='password' name='password' placeholder='Mot de passe'></br>
 			<input type='text' name='link' placeholder='Lien Stream'></br>
@@ -64,7 +64,7 @@ else{
 	echo $_SESSION['username'].'<br>';
 	echo "<form id='modif_link'>
 			<input type='text' id='link_value' value='".$_SESSION['link']."' style='width:500px;'><input type='submit' value='Modifier'>
-		</form>";
+		</form> ";
 	echo "<a href='deco.php'>Deconnexion</a><br><br>";
 
 	echo "<button id='button_actualize_streamers'>Actualiser</button><br>"; 
