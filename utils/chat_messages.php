@@ -1,6 +1,8 @@
 <?php
 require_once("bdd.php");
 
+require_once("connection.js");
+
 if(isset($_SESSION['username'])){
 	$query = $bdd->query('SELECT id, username, message, time FROM chat ORDER BY id DESC');
 	while ($data = $query->fetch()) {

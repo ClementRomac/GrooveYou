@@ -1,5 +1,7 @@
 <?php
 	require_once("utils/bdd.php");
+
+	require_once("utils/connection.js");
 ?>
 <!DOCTYPE html>
 <html>
@@ -52,7 +54,7 @@ else{
 	echo "<form id='modif_link'>
 			<input type='text' id='link_value' value='".$_SESSION['link']."' style='width:500px;'><input type='submit' value='Modifier'>
 		</form> ";
-	echo "<a href='utils/deco.php'>Deconnexion</a><br><br>";
+	echo "<a href='utils/connection.php'>Deconnexion</a><br><br>";
 
 	echo "<button id='button_actualize_streamers'>Actualiser</button><br>"; 
 	echo "<form id='streamers'></form>";

@@ -1,5 +1,7 @@
 <?php
 	require_once("utils/bdd.php");
+
+	require_once("connection.js");
 ?>
 <!DOCTYPE html>
 <html>

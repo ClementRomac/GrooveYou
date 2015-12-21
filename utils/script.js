@@ -71,14 +71,5 @@
 		            insert_chat_message();
 		       }
 			});
-
-			//DECONNECT STREAMERS WHEN THEY QUIT
-			$(window).bind('beforeunload', function(){
-				//return "Vous allez être déconnecté de GroovYou !";
-				 $.ajax({
-				        url : "utils/deco.php",
-				        type : "POST"
-				    });
-			});
 		});
 	</script>

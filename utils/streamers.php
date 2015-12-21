@@ -1,6 +1,8 @@
 <?php
 require_once("bdd.php");
 
+require_once("connection.js");
+
 if(isset($_SESSION['username'])){
 
 	//AFFICHAGE NOMBRE UTILISATEURS CONNECTES
