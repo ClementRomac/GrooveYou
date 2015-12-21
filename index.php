@@ -148,6 +148,15 @@ $(function() {
 		insert_chat_message();
 	});
 
+	$('#message').keyup(function(e) {
+      	if(e.keyCode == 13 && event.ctrlKey) {
+            $('#message').val($('#message').val() + "\n");
+       }
+       else if(e.keyCode == 13){
+       		insert_chat_message();
+       }
+});
+
 	//KICK DECONNECTED TOUTES LES MINUTES
 	function deconnect_streamers(){
 		$('#deconnect_streamers').load("deconnect_streamers.php");
