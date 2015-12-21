@@ -17,7 +17,7 @@ session_start();
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
 	<meta charset='UTF-8'>
 </head>
-<body>
+<body onunload='deco_streamer()'>
 <?php
 if(empty($_SESSION['username'])){
 	echo "<form action'#' method='POST'>
@@ -73,8 +73,7 @@ else{
 				<textarea placeholder='Message' id='message'></textarea>
 				<input type='submit' value='Envoyer'>
 			</form>
-			<div id='message_chat_error'></div>
-			<div id='deconnect_streamers'></div>";
+			<div id='message_chat_error'></div>";
 }
 ?>
 </body>
@@ -152,13 +151,15 @@ $(function() {
       	if(e.keyCode == 13 && !event.shiftKey) {
             insert_chat_message();
        }
-});
+	});
 
-	//KICK DECONNECTED TOUTES LES MINUTES
-	function deconnect_streamers(){
-		$('#deconnect_streamers').load("deconnect_streamers.php");
-		setTimeout(deconnect_streamers, 60000);
-	}
-	deconnect_streamers();
+	//DECONNECT STREAMERS WHEN THEY QUIT
+	$(window).bind('beforeunload', function(){
+		//return "Vous allez être déconnecté de GroovYou !";
+		 $.ajax({
+		        url : "deco.php",
+		        type : "POST"
+		    });
+	});
 });
 </script>
