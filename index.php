@@ -149,11 +149,8 @@ $(function() {
 	});
 
 	$('#message').keyup(function(e) {
-      	if(e.keyCode == 13 && event.ctrlKey) {
-            $('#message').val($('#message').val() + "\n");
-       }
-       else if(e.keyCode == 13){
-       		insert_chat_message();
+      	if(e.keyCode == 13 && !event.shiftKey) {
+            insert_chat_message();
        }
 });
 
