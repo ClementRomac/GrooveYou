@@ -2,7 +2,7 @@
 session_start();
 if(isset($_SESSION['username'])){
 	try{
-		$bdd = new PDO('mysql:host=localhost;dbname=u966249616_1','root','X3tdhU0WTi');
+		$bdd = new PDO('mysql:host=localhost;dbname=Stream_Audio','root','Az3rty');
 		$bdd->setAttribute(PDO::ATTR_CASE,PDO::CASE_LOWER);
 		$bdd->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
 		$bdd->exec("SET NAMES 'utf8'");

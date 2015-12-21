@@ -1,0 +1,97 @@
+@font-face {
+	font-family: 'main';
+	src: url('polices/OpenSans-Semibold.ttf');
+}
+
+@font-face {
+	font-family: 'formulaire';
+	src: url('polices/OpenSans-LightItalic.ttf');
+}
+
+@font-face {
+	font-family: 'input';
+	src: url('polices/OpenSans-Light.ttf');
+}
+
+body {
+	background-color: rgb(106, 197, 195);
+	width: 500px;
+	margin: 0 auto;
+	margin-top: 200px;
+}
+
+/*DIVs PRINCIPALES*/
+.connexion, .inscription {
+	border: white solid 3px;
+	border-radius: 35px;
+	margin-bottom: 10px;
+}
+
+.connexion p, .inscription p {
+	font-family: 'main';
+	color: white;
+	font-size: 35px;
+	margin: 0 auto;
+	width: 168px;
+	margin-bottom: 20px;
+	text-decoration: none;
+}
+
+.connexion form input, .inscription form input {
+	font-family: 'input';
+	margin: 10px 0px 10px 80px;
+	background-color: rgb(106, 197, 195);
+	color: white;
+	border: none;
+	font-size: 28px;
+}
+
+::-webkit-input-placeholder {
+	color: white;
+	font-family: 'formulaire';
+}
+
+/*CONNEXION*/
+.connexion form input:nth-child(7) {
+	margin-left: 170px;
+	margin-left: 165px;
+	font-family: 'main';
+	background-color: white;
+	color: rgb(106, 197, 195);
+	border-radius: 20px;
+}
+
+.connexion form input:nth-child(7):hover {
+	cursor: pointer;
+}
+
+body a {
+	color: white;
+	text-decoration: none;
+	font-family: 'formulaire';
+	float: right;
+}
+
+body a:hover {
+	text-decoration: underline;
+}
+
+body p {
+	font-family: 'formulaire';
+	color: white;
+	text-decoration: underline;
+}
+
+/*INSCRIPTION*/
+.inscription form input:nth-child(5) {
+	margin-left: 170px;
+	margin-left: 165px;
+	font-family: 'main';
+	background-color: white;
+	color: rgb(106, 197, 195);
+	border-radius: 20px;
+}
+
+.inscription form input:nth-child(5):hover {
+	cursor: pointer;
+}

@@ -1,6 +1,6 @@
 <?php
 try{
-	$bdd = new PDO('mysql:host=localhost;dbname=u966249616_1','root','X3tdhU0WTi');
+	$bdd = new PDO('mysql:host=localhost;dbname=Stream_Audio','root','Az3rty');
 	$bdd->setAttribute(PDO::ATTR_CASE,PDO::CASE_LOWER);
 	$bdd->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
 	$bdd->exec("SET NAMES 'utf8'");
@@ -15,15 +15,20 @@ session_start();
 <head>
 	<title>Stream Audio de malade !</title>
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+	<link rel="stylesheet" href="css/style.css" type="text/css">
+	<meta charset='UTF-8'>
 </head>
 <body>
+<div class="inscription">
 <?php
 if(empty($_SESSION['username'])){
-	echo "<form method='POST' action=''>
+	echo "<p>Inscription</p>
+	<form method='POST' action=''>
 			<input type='text' name='username' placeholder='Pseudo'></br>	
 			<input type='password' name='password' placeholder='Mot de passe'></br>
 			<input type='submit' value=\"S'Inscrire ! \" name='inscription'></br>
-		</form><br><br>
+		</form>
+		</div>
 	<a href='index.php'>Retour</a>";
 	if(isset($_POST['inscription'])){
 		if(!empty($_POST['username']) && !empty($_POST['password'])){
@@ -37,11 +42,11 @@ if(empty($_SESSION['username'])){
 				header('Location: index.php');
 			}
 			else{
-				echo "Ce pseudo existe déjà !";
+				echo "<p>Ce pseudo existe déjà !</p>";
 			}
 		}
 		else{
-			echo "Veuillez remplir tous les champs !";
+			echo "<p>Veuillez remplir tous les champs !</p>";
 		}
 	}
 }

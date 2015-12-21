@@ -1,6 +1,6 @@
 <?php
 try{
-	$bdd = new PDO('mysql:host=localhost;dbname=u966249616_1','root','X3tdhU0WTi');
+	$bdd = new PDO('mysql:host=localhost;dbname=Stream_Audio','root','Az3rty');
 	$bdd->setAttribute(PDO::ATTR_CASE,PDO::CASE_LOWER);
 	$bdd->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
 	$bdd->exec("SET NAMES 'utf8'");
@@ -15,18 +15,22 @@ session_start();
 <head>
 	<title>Stream Audio de malade !</title>
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+	<link rel="stylesheet" href="css/style.css" type="text/css">
 	<meta charset='UTF-8'>
 </head>
 <body>
+<div class="connexion">
 <?php
 if(empty($_SESSION['username'])){
-	echo "<form action'#' method='POST'>
+	echo "<p> Connexion</p>
+	<form action='#' method='POST'>
 			<input type='text' name='username' placeholder='Pseudo'></br>	
 			<input type='password' name='password' placeholder='Mot de passe'></br>
-			<input type='text' name='link' placeholder='Lien Stream'><span>  Vous pourrez modifier votre lien plus tard</span></br>
+			<input type='text' name='link' placeholder='Lien Stream'></br>
 			<input type='submit' value='Se Connecter' name='connection'></br>
-		</form><br><br>
-		<a href='inscription.php'> S'inscrire ! </a><br><br>";
+		</form>
+		</div>
+		<a href='inscription.php'> S'inscrire ! </a>";
 	if(isset($_POST['connection'])){
 		if(!empty($_POST['username']) && !empty($_POST['password'])){
 			$query = $bdd->prepare('SELECT username, password, ip FROM users WHERE username = :username');
@@ -44,14 +48,14 @@ if(empty($_SESSION['username'])){
 					header('Location: index.php');
 				}
 				else{
-					echo "Cet utilisateur est déjà connecté !";
+					echo "<p>Cet utilisateur est déjà connecté !</p>";
 				}
 			}
 			else{
-				echo "Mauvaise combinaison";
+				echo "<p>Mauvaise combinaison</p>";
 			}
 		}else{
-			echo "Tous les champs doivent être remplis";
+			echo "<p>Tous les champs doivent être remplis</p>";
 		
 		}
 	}
@@ -60,7 +64,7 @@ else{
 	echo $_SESSION['username'].'<br>';
 	echo "<form id='modif_link'>
 			<input type='text' id='link_value' value='".$_SESSION['link']."' style='width:500px;'><input type='submit' value='Modifier'>
-		</form> ";
+		</form>";
 	echo "<a href='deco.php'>Deconnexion</a><br><br>";
 
 	echo "<button id='button_actualize_streamers'>Actualiser</button><br>"; 
