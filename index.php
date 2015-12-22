@@ -51,9 +51,12 @@ if(empty($_SESSION['username'])){
 }
 else{
 	echo $_SESSION['username'].'<br>';
+	echo "<a href='account.php'>Votre Compte</a><br><br>";
 	echo "<form id='modif_link'>
 			<input type='text' id='link_value' value='".$_SESSION['link']."' style='width:500px;'><input type='submit' value='Modifier'>
-		</form> ";
+		</form> 
+		<div id='message_link_error'></div>";
+
 	echo "<a href='utils/connection.php'>Deconnexion</a><br><br>";
 
 	echo "<button id='button_actualize_streamers'>Actualiser</button><br>"; 
