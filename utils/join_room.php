@@ -20,9 +20,10 @@ if(isset($_SESSION['username'])){
 		else{
 			echo "<form method='POST' action=''>
 					<input type='password' name='password' placeholder='Password'>
+					<input type='hidden' name='join_room' value='".$_POST['join_room']."'>
 					<input type='submit' value='Entrer'>
 				</form>
-				<a href='index.php'>Retour</a>";
+				<a href='../index.php'>Retour</a>";
 			if(isset($_POST['password'])){
 				if(md5($_POST['password']) == $retour_room_infos['password']){
 					$query = $bdd->prepare('UPDATE users SET room = :room WHERE username = :username');
