@@ -48,7 +48,8 @@
 			    $.ajax({
 			        url : "utils/add_message.php",
 			        type : "POST",
-			        data : "username=" + <?= '"'.$_SESSION['username'].'"' ?> + "&message=" + message + "&time=" + date,success : function(code_html, statut){
+			        data : "username=" + <?= '"'.$_SESSION['username'].'"' ?> + "&message=" + message + "&time=" + date,
+			        success : function(code_html, statut){
 	           			load_chat_messages();
 	           			$('#message_chat_error').text("");
 			       },
@@ -70,6 +71,16 @@
 	      	if(e.keyCode == 13 && !event.shiftKey) {
 	            insert_chat_message();
 	       }
+		});
+
+	//LIST ROOMS
+	function actualize_rooms(){
+			$('#rooms_table').load('utils/room_list.php');
+			//setTimeout(actualize_streamers, 2000);
+		}
+		actualize_rooms();
+		$("#button_actualize_rooms").click(function(e){
+			actualize_rooms();
 		});
 	});
 </script>

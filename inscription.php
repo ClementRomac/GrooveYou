@@ -1,8 +1,3 @@
-<?php
-	require_once("utils/bdd.php");
-
-	require_once("utils/connection.js");
-?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,6 +6,11 @@
 	<meta charset='UTF-8'>
 </head>
 <body>
+<?php
+	require_once("utils/bdd.php");
+
+	require_once("utils/connection.js");
+?>
 <?php
 if(empty($_SESSION['username'])){
 	echo "<form method='POST' action=''>

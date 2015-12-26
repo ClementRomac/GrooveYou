@@ -1,8 +1,3 @@
-<?php
-	require_once("utils/bdd.php");
-
-	require_once("utils/connection.js");
-?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,6 +6,11 @@
 	<meta charset='UTF-8'>
 </head>
 <body>
+<?php
+	require_once("utils/bdd.php");
+
+	require_once("utils/connection.js");
+?>
 <?php
 if(empty($_SESSION['username'])){
 	echo "<form action'#' method='POST'>
@@ -30,7 +30,8 @@ if(empty($_SESSION['username'])){
 				if($retour['ip'] == ''){
 					$_SESSION['username'] = $_POST['username'];
 					$_SESSION['link'] = $_POST['link'];
-					$query = $bdd->prepare('UPDATE users SET link = :link, ip = :ip WHERE username = :username');
+					$_SESSION['room'] = 0;
+					$query = $bdd->prepare('UPDATE users SET link = :link, ip = :ip, room = 0 WHERE username = :username');
 					$query->execute(array('link' => $_POST['link'],
 											'ip' => $_SERVER['REMOTE_ADDR'],
 											'username' => $_SESSION['username']));
@@ -50,28 +51,34 @@ if(empty($_SESSION['username'])){
 	}
 }
 else{
-	echo $_SESSION['username'].'<br>';
-	echo "<a href='account.php'>Votre Compte</a><br><br>";
-	echo "<form id='modif_link'>
-			<input type='text' id='link_value' value='".$_SESSION['link']."' style='width:500px;'><input type='submit' value='Modifier'>
-		</form> 
-		<div id='message_link_error'></div>";
+	if($_SESSION['room'] == 0){
+		echo "<p>Accueil !</p><br>";
+		echo $_SESSION['username'].'<br>';
+		echo "<a href='account.php'>Votre Compte</a><br><br>";
+		echo "<form id='modif_link'>
+				<input type='text' id='link_value' value='".$_SESSION['link']."' style='width:500px;'><input type='submit' value='Modifier'>
+			</form> 
+			<div id='message_link_error'></div>";
 
-	echo "<a href='utils/connection.php'>Deconnexion</a><br><br>";
+		echo "<a href='utils/connection.php'>Deconnexion</a><br><br>";
 
-	echo "<button id='button_actualize_streamers'>Actualiser</button><br>"; 
-	echo "<form id='streamers'></form>";
-	echo "<div id='player'>	
-		</div><br><br><br><br>";
-	echo "<div id='chat'>
-			<div id='chat_messages' style='overflow:auto;border:1px solid black;width:50%;height:300px;'></div><br>
-			<form id='new_message'>
-				<textarea placeholder='Message' id='message'></textarea>
-				<input type='submit' value='Envoyer'>
-			</form>
-			<div id='message_chat_error'></div>";
+		echo "<a href='create_room.php'>Créer un salon</a><br><br>";
 
-	require_once("utils/script.js");
+		echo "<button id='button_actualize_rooms'>Actualiser</button><br>"; 
+		echo "<div id='rooms_table'></div><br>";
+		echo "<div id='chat'>
+				<div id='chat_messages' style='overflow:auto;border:1px solid black;width:50%;height:300px;'></div><br>
+				<form id='new_message'>
+					<textarea placeholder='Message' id='message'></textarea>
+					<input type='submit' value='Envoyer'>
+				</form>
+				<div id='message_chat_error'></div>";
+
+		require_once("utils/script.js");
+	}
+	else{
+		header('Location: room.php');
+	}
 }
 ?>
 </body>
