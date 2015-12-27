@@ -54,14 +54,25 @@ else{
 				</form>
 				<div id='message_chat_error'></div>";
 
-		require_once("utils/script.js");
-
 		if(isset($_POST['leave_room'])){
+			//SUPPRESSION ROOM SI PLUS PERSONNE DEDANS
+			$query = $bdd->prepare('SELECT room FROM users WHERE room = :room');
+			$query->execute(array('room' => $_SESSION['room']));
+			$room_empty = $query->fetch();
+
+			if(empty($room_empty['room'])){
+				$query = $bdd->prepare('DELETE FROM rooms WHERE number = :number');
+				$query->execute(array('number' => $_SESSION['room']));
+			}
+
+			//QUIT UTILISATEUR
 			$query = $bdd->prepare('UPDATE users SET room = 0 WHERE username = :username');
 			$query->execute(array('username' => $_SESSION['username']));
 			$_SESSION['room'] = 0;
 			header('Location: index.php');
 		}
+
+		require_once("utils/script.js");
 	}
 }
 ?>

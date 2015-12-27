@@ -76,11 +76,11 @@
 	//LIST ROOMS
 	function actualize_rooms(){
 			$('#rooms_table').load('utils/room_list.php');
-			//setTimeout(actualize_streamers, 2000);
+			setTimeout(actualize_rooms, 5000);
 		}
 		actualize_rooms();
-		$("#button_actualize_rooms").click(function(e){
-			actualize_rooms();
-		});
+		// $("#button_actualize_rooms").click(function(e){
+		// 	actualize_rooms();
+		// });
 	});
 </script>

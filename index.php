@@ -64,7 +64,7 @@ else{
 
 		echo "<a href='create_room.php'>Créer un salon</a><br><br>";
 
-		echo "<button id='button_actualize_rooms'>Actualiser</button><br>"; 
+		//echo "<button id='button_actualize_rooms'>Actualiser</button><br>"; 
 		echo "<div id='rooms_table'></div><br>";
 		echo "<div id='chat'>
 				<div id='chat_messages' style='overflow:auto;border:1px solid black;width:50%;height:300px;'></div><br>

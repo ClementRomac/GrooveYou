@@ -18,7 +18,7 @@ if(empty($_SESSION['username']) || $_SESSION['room'] != 0){
 else{
 	echo "<form action'' method='POST'>
 			<input type='text' name='room_name' placeholder='Nom de la salle'></br>	
-			<input type='password' name='password' placeholder='Mot de passe'></br><label>Laissez vide pour ne pas en mettre</label>
+			<input type='password' name='password' placeholder='Mot de passe'><label>  Laissez vide pour ne pas en mettre</label><br>
 			<input type='submit' value='Créer' name='create'></br>
 		</form><br><br>
 		<a href='index.php'> Retour </a><br><br>";
