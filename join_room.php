@@ -48,7 +48,8 @@ if(isset($_SESSION['username'])){
 			}
 		}
 		else{
-			header('Location: index.php');
+			//header('Location: index.php');
+			echo "<p>Cette salle n'existe plus ! </p><br><a href='index.php>Retour</a>";
 		}
 	}else{
 		header('Location: index.php');

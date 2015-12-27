@@ -79,8 +79,8 @@
 			setTimeout(actualize_rooms, 5000);
 		}
 		actualize_rooms();
-		// $("#button_actualize_rooms").click(function(e){
-		// 	actualize_rooms();
-		// });
+		$("#button_actualize_rooms").click(function(e){
+			$('#rooms_table').load('utils/room_list.php');
+		});
 	});
 </script>

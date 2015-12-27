@@ -10,7 +10,8 @@ if(isset($_SESSION['username'])){
 	$retour->execute(array('username' => $_SESSION['username'], 
 							'room' => $_SESSION['room']));
 	$donnees = $retour->fetchAll();
-	echo "<p> Il y a ". count($donnees);
+	echo "<p> Il " ;
+	echo count($donnees) == 0 ? "n'y aucun" : "y a ".count($donnees);
 	echo count($donnees)<= 1 ? " utilisateur connecté" : " utilisateurs connectés";
 	echo " dans ce salon. </p>";
 	
