@@ -12,7 +12,7 @@ if(isset($_SESSION['username'])){
 	echo count($donnees)<= 1 ? " salon</p>" : " salons</p>";
 	
 	// RECUPERATION DES SALONS
-	echo "<form method='POST' action='utils/join_room.php'>
+	echo "<form method='POST' action='join_room.php'>
 	<table style='border:1px solid black'>";
 	foreach ($donnees as $value) {
 		echo "<tr><td>".$value['name']."</td><td><button name='join_room' value='".$value['number']."''>Rejoindre</button></form></td></tr>";
