@@ -43,12 +43,11 @@
 		function insert_chat_message(){
 			var message = $('#message').val();
 			$('#message').val("");
-			var date = <?= '"'.date('d/m/Y H:i:s').'"' ?>;
 			if(message != "" && message != " "){
 			    $.ajax({
 			        url : "utils/add_message.php",
 			        type : "POST",
-			        data : "username=" + <?= '"'.$_SESSION['username'].'"' ?> + "&message=" + message + "&time=" + date,
+			        data : "username=" + <?= '"'.$_SESSION['username'].'"' ?> + "&message=" + message,
 			        success : function(code_html, statut){
 	           			load_chat_messages();
 	           			$('#message_chat_error').text("");
