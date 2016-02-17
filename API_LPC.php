@@ -10,7 +10,7 @@ catch(PDOException $e){
 }
 
 if(!empty($_GET['infos_parents'])){
-	$query = $bdd->execute("SELECT * FROM infos_parents");
+	$query = $bdd->query("SELECT * FROM infos_parents");
 	$response = $query->fetch();
 	header('Content-Type: application/json');
 	echo json_encode($response);
