@@ -9,9 +9,32 @@ catch(PDOException $e){
 	die("Erreur MySQL: ".$e->getMessage());
 }
 
-if(!empty($_GET['infos_parents'])){
-	$query = $bdd->query("SELECT * FROM infos_parents ORDER BY id DESC");
-	$response = $query->fetch();
-	header('Content-Type: application/json');
-	echo json_encode($response);
+$method = $_SERVER['REQUEST_METHOD'];
+if($method == 'GET'){
+	if(!empty($_GET['infos'])){
+		switch ($_GET['infos']) {
+			case 'infos_parents':
+				$query = $bdd->query("SELECT * FROM infos_parents ORDER BY id DESC");
+				$response = $query->fetch();
+				header('Content-Type: application/json');
+				echo json_encode($response);
+				break;
+			
+			default:
+				# code...
+				break;
+		}
+	}
+	else{
+		echo "error infos must not be empty";
+	}
+}
+else if($method == 'PUT'){
+	//UPDATE
+}
+else if($method == 'POST'){
+	//INSERT
+}
+else{
+	echo "error the HTTP requested isn't implemented";
 }
