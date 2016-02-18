@@ -17,14 +17,43 @@ if($method == 'GET'){
 		if(!empty($_GET['infos'])){
 			switch ($_GET['infos']) {
 				case 'infos_parents':
-					$query = $bdd->query("SELECT * FROM infos_parents ORDER BY id DESC");
-					$response = $query->fetch();
+					$query = $bdd->query("SELECT * FROM infos_parents ORDER BY id DESC LIMIT 10");
+					$result = $query->fetch();
 					header('Content-Type: application/json');
-					echo json_encode($response);
+					echo json_encode($result);
 					break;
+
+				case 'infos_high_school':
+					$query = $bdd->query("SELECT * FROM infos_high_school ORDER BY id DESC LIMIT 10");
+					$result = $query->fetch();
+					header('Content-Type: application/json');
+					echo json_encode($result);
+					break;
+
+				case 'cdi':
+					$query = $bdd->query("SELECT * FROM cdi ORDER BY id DESC LIMIT 10");
+					$result = $query->fetch();
+					header('Content-Type: application/json');
+					echo json_encode($result);
+					break;
+
+				case 'cvl':
+					$query = $bdd->query("SELECT * FROM cvl ORDER BY id DESC LIMIT 10");
+					$result = $query->fetch();
+					header('Content-Type: application/json');
+					echo json_encode($result);
+					break;
+
+				case 'infos_students':
+					$query = $bdd->query("SELECT * FROM infos_students ORDER BY id DESC LIMIT 1");
+					$result = $query->fetch();
+					header('Content-Type: application/json');
+					echo json_encode($result);
+					break;
+
 				
 				default:
-					echo "error these infos don't exist";
+					echo "error those infos don't exist";
 					break;
 			}
 		}
