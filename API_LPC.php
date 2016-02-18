@@ -11,7 +11,7 @@ catch(PDOException $e){
 
 $method = $_SERVER['REQUEST_METHOD'];
 if($method['apikey'] == 'test') echo "OK KEY";
-
+print_r($method);
 if($method == 'GET'){
 	if(!empty($_GET['infos'])){
 		switch ($_GET['infos']) {
