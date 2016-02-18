@@ -10,25 +10,30 @@ catch(PDOException $e){
 }
 
 $method = $_SERVER['REQUEST_METHOD'];
-if($method['apikey'] == 'test') echo "OK KEY";
-print_r($method);
+$apikey = "test";
+
 if($method == 'GET'){
-	if(!empty($_GET['infos'])){
-		switch ($_GET['infos']) {
-			case 'infos_parents':
-				$query = $bdd->query("SELECT * FROM infos_parents ORDER BY id DESC");
-				$response = $query->fetch();
-				header('Content-Type: application/json');
-				echo json_encode($response);
-				break;
-			
-			default:
-				echo "error these infos don't exist";
-				break;
+	if(!empty($_GET['apikey']) && $_GET['apikey'] == $apikey){
+		if(!empty($_GET['infos'])){
+			switch ($_GET['infos']) {
+				case 'infos_parents':
+					$query = $bdd->query("SELECT * FROM infos_parents ORDER BY id DESC");
+					$response = $query->fetch();
+					header('Content-Type: application/json');
+					echo json_encode($response);
+					break;
+				
+				default:
+					echo "error these infos don't exist";
+					break;
+			}
+		}
+		else{
+			echo "error infos must not be empty";
 		}
 	}
 	else{
-		echo "error infos must not be empty";
+		echo "error api key is missing or incorrect";
 	}
 }
 else if($method == 'PUT'){
