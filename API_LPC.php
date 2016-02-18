@@ -10,6 +10,8 @@ catch(PDOException $e){
 }
 
 $method = $_SERVER['REQUEST_METHOD'];
+if($method['apikey'] == 'test') echo "OK KEY";
+
 if($method == 'GET'){
 	if(!empty($_GET['infos'])){
 		switch ($_GET['infos']) {
@@ -21,7 +23,7 @@ if($method == 'GET'){
 				break;
 			
 			default:
-				# code...
+				echo "error these infos don't exist";
 				break;
 		}
 	}
