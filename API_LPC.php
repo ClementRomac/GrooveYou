@@ -18,35 +18,35 @@ if($method == 'GET'){
 			switch ($_GET['infos']) {
 				case 'infos_parents':
 					$query = $bdd->query("SELECT * FROM infos_parents ORDER BY id DESC LIMIT 10");
-					$result = $query->fetch();
+					$result = $query->fetchAll();
 					header('Content-Type: application/json');
 					echo json_encode($result);
 					break;
 
 				case 'infos_high_school':
 					$query = $bdd->query("SELECT * FROM infos_high_school ORDER BY id DESC LIMIT 10");
-					$result = $query->fetch();
+					$result = $query->fetchAll();
 					header('Content-Type: application/json');
 					echo json_encode($result);
 					break;
 
 				case 'cdi':
 					$query = $bdd->query("SELECT * FROM cdi ORDER BY id DESC LIMIT 10");
-					$result = $query->fetch();
+					$result = $query->fetchAll();
 					header('Content-Type: application/json');
 					echo json_encode($result);
 					break;
 
 				case 'cvl':
 					$query = $bdd->query("SELECT * FROM cvl ORDER BY id DESC LIMIT 10");
-					$result = $query->fetch();
+					$result = $query->fetchAll();
 					header('Content-Type: application/json');
 					echo json_encode($result);
 					break;
 
 				case 'infos_students':
 					$query = $bdd->query("SELECT * FROM infos_students ORDER BY id DESC LIMIT 1");
-					$result = $query->fetch();
+					$result = $query->fetchAll();
 					header('Content-Type: application/json');
 					echo json_encode($result);
 					break;
@@ -56,6 +56,7 @@ if($method == 'GET'){
 					echo "error those infos don't exist";
 					break;
 			}
+
 		}
 		else{
 			echo "error infos must not be empty";
