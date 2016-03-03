@@ -17,7 +17,6 @@ if(empty($_SESSION['username'])){
 			<input type='text' name='username' placeholder='Pseudo'></br>	
 			<input type='password' name='password' placeholder='Mot de passe'></br>
 			<input type='password' name='password_2' placeholder='Mot de passe à nouveau'></br>
-			<input type='password' name='password' placeholder='Mot de passe'></br>
 			<input type='password' name='password_trick' placeholder='Mot de passe de la mort qui tue'></br>
 			<input type='submit' value=\"S'Inscrire ! \" name='inscription'></br>
 		</form><br><br>
