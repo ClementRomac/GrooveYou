@@ -1,4 +1,4 @@
-<?php 
+<?php
 try{
 	$bdd = new PDO('mysql:host=mysql.hostinger.fr;dbname=u622336288_1','u622336288_admin','oXJUYg13ib');
 	$bdd->setAttribute(PDO::ATTR_CASE,PDO::CASE_LOWER);
@@ -9,7 +9,4 @@ catch(PDOException $e){
 	die("Erreur MySQL: ".$e->getMessage());
 }
 session_start();
-$query = $bdd->prepare("UPDATE users SET link = '', ip='', time='' WHERE username = :username");
-$query->execute(array('username' => $_SESSION['username']));
-session_destroy();
-header('Location: index.php');
+?>
