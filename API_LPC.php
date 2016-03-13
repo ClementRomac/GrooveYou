@@ -10,7 +10,7 @@ catch(PDOException $e){
 }
 
 $method = $_SERVER['REQUEST_METHOD'];
-$apikey = "test";
+$apikey = "3cc31cd246149aec68079241e71e98f6";
 
 if($method == 'GET'){
 	if(!empty($_GET['apikey']) && $_GET['apikey'] == $apikey){
@@ -30,15 +30,15 @@ if($method == 'GET'){
 					echo json_encode($result);
 					break;
 
-				case 'cdi':
-					$query = $bdd->query("SELECT * FROM cdi ORDER BY id DESC LIMIT 10");
+				case 'infos_cdi':
+					$query = $bdd->query("SELECT * FROM infos_cdi ORDER BY id DESC LIMIT 10");
 					$result = $query->fetchAll();
 					header('Content-Type: application/json');
 					echo json_encode($result);
 					break;
 
-				case 'cvl':
-					$query = $bdd->query("SELECT * FROM cvl ORDER BY id DESC LIMIT 10");
+				case 'infos_cvl':
+					$query = $bdd->query("SELECT * FROM infos_cvl ORDER BY id DESC LIMIT 10");
 					$result = $query->fetchAll();
 					header('Content-Type: application/json');
 					echo json_encode($result);
