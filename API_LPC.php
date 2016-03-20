@@ -45,7 +45,7 @@ if($method == 'GET'){
 					break;
 
 				case 'infos_students':
-					$query = $bdd->query("SELECT * FROM infos_students ORDER BY id DESC LIMIT 1");
+					$query = $bdd->query("SELECT * FROM infos_students ORDER BY id DESC LIMIT 10");
 					$result = $query->fetchAll();
 					header('Content-Type: application/json');
 					echo json_encode($result);
