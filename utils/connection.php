@@ -23,6 +23,10 @@ if(isset($_SESSION['username'])){
 				if(empty($room_empty['room'])){
 					$query = $bdd->prepare('DELETE FROM rooms WHERE number = :number');
 					$query->execute(array('number' => $_SESSION['room']));
+
+					//SUPPRESSION MESSAGES DE LA ROOM
+					$query = $bdd->prepare('DELETE FROM chat WHERE room = :room');
+					$query->execute(array('room' => $_SESSION['room']));
 				}
 			}
 			
