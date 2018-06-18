@@ -1,7 +1,7 @@
 # GrooveYou
 
 ## What is it ?
-GrooveYou is a websites where users can share music with friends.
+GrooveYou is a website where users can share music with friends.
 You can create rooms, chat with your fiends...
 
 ## How to stream music ?
